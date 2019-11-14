@@ -26,9 +26,7 @@ VERSION = "0.1.0"
 REQUIRED = []
 
 # What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
+EXTRAS = {}
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
