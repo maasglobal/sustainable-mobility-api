@@ -21,6 +21,10 @@ This library intends to provide:
 
 The carbon estimates produced by this model may be based on the following resources. A full description of the model, including data sources, will be provided as the library takes shape.
 
+- European Environment Agency [CO2 emissions from passenger transport](https://www.eea.europa.eu/media/infographics/co2-emissions-from-passenger-transport/view)
+
+Further improvements to the model may come from other sources, such as the following.
+
 - IPCC AR5 [Chapter 8 - Transport](https://www.ipcc.ch/site/assets/uploads/2018/02/ipcc_wg3_ar5_chapter8.pdf)
 - Wikipedia: [Environmental impact of transport](https://en.wikipedia.org/wiki/Environmental_impact_of_transport)
 
