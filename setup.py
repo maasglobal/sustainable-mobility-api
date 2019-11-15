@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pipenv install twine --dev
+"""Setup."""
+
+# Template from https://github.com/navdeep-G/setup.py
 
 import io
 import os
@@ -33,24 +34,25 @@ EXTRAS = {}
 # Except, perhaps the License and Trove Classifiers!
 # If you do change the License, remember to change the Trove Classifier for that!
 
-here = os.path.abspath(os.path.dirname(__file__))
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 # Import the README and use it as the long-description.
 # Note: this will only work if 'README.md' is present in your MANIFEST.in file!
 try:
-    with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
-        long_description = "\n" + f.read()
+    with io.open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
+        LONG_DESCRIPTION = "\n" + f.read()
 except FileNotFoundError:
-    long_description = DESCRIPTION
+    LONG_DESCRIPTION = DESCRIPTION
 
 # Load the package's __version__.py module as a dictionary.
-about = {}
+ABOUT = {}
 if not VERSION:
-    project_slug = NAME.lower().replace("-", "_").replace(" ", "_")
-    with open(os.path.join(here, project_slug, "__version__.py")) as f:
-        exec(f.read(), about)
+    PROJECT_SLUG = NAME.lower().replace("-", "_").replace(" ", "_")
+    with open(os.path.join(HERE, PROJECT_SLUG, "__version__.py")) as f:
+        # pylint: disable=exec-used
+        exec(f.read(), ABOUT)
 else:
-    about["__version__"] = VERSION
+    ABOUT["__version__"] = VERSION
 
 
 class UploadCommand(Command):
@@ -60,9 +62,9 @@ class UploadCommand(Command):
     user_options = []
 
     @staticmethod
-    def status(s):
+    def status(string):
         """Prints things in bold."""
-        print("\033[1m{0}\033[0m".format(s))
+        print("\033[1m{0}\033[0m".format(string))
 
     def initialize_options(self):
         pass
@@ -73,7 +75,7 @@ class UploadCommand(Command):
     def run(self):
         try:
             self.status("Removing previous builds…")
-            rmtree(os.path.join(here, "dist"))
+            rmtree(os.path.join(HERE, "dist"))
         except OSError:
             pass
 
@@ -84,7 +86,7 @@ class UploadCommand(Command):
         os.system("twine upload dist/*")
 
         self.status("Pushing git tags…")
-        os.system("git tag v{0}".format(about["__version__"]))
+        os.system("git tag v{0}".format(ABOUT["__version__"]))
         os.system("git push --tags")
 
         sys.exit()
@@ -93,9 +95,9 @@ class UploadCommand(Command):
 # Where the magic happens:
 setup(
     name=NAME,
-    version=about["__version__"],
+    version=ABOUT["__version__"],
     description=DESCRIPTION,
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     author=AUTHOR,
     author_email=EMAIL,
