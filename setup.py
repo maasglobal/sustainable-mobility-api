@@ -21,7 +21,7 @@ URL = "https://github.com/maasglobal/transport-co2"
 EMAIL = "brylie.oxley@maas.global, markus.schepke@maas.global"
 AUTHOR = "Brylie Christopher Oxley, Markus Schepke"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "0.1.0"
+VERSION = None  # will be read from __version__.py
 
 # What packages are required for this module to be executed?
 REQUIRED = []
