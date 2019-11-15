@@ -2,6 +2,40 @@
 
 Calculate CO2 (equivalent) emissions for a given transport trip and provide a simple interpretation of the result.
 
+Install from [PyPI](https://pypi.org/project/transport-co2/) via
+```bash
+pip install transport-co2
+```
+
+## Usage examples
+
+You can list the currently supported modes like so:
+```python
+from transport_co2 import Mode
+list(Mode)
+```
+Each `Mode` allows you to estimate the CO2 emission per passenger for a journey given its distance (in km):
+```python
+Mode.SMALL_CAR.estimate_co2(distance_in_km=100)
+# 11200.0
+```
+This estimate is based on an average occupancy (in this example `1.5`). You can also specify the occupancy:
+```python
+Mode.SMALL_CAR.estimate_co2(distance_in_km=100, occupancy=3)
+# 5600.0
+```
+If you don't want to work with the `Mode` enum, you can instead work with the `estimate_co2` function:
+```python
+from transport_co2 import estimate_co2
+estimate_co2(mode="light_rail", distance_in_km=100)
+# 1400.0
+```
+You can also specify the occupancy like above:
+```python
+estimate_co2(mode="light_rail", distance_in_km=100, occupancy=250)
+# 873.6
+```
+
 ## Goals
 
 This project is intended to be used to help raise awareness about the cost of transportation choices, so people can make informed decisions.
