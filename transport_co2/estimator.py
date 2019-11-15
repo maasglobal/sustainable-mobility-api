@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+"""Estimator as a function."""
+
 from typing import Optional, Union
 from .model import Mode
 
@@ -17,4 +21,3 @@ def estimate_co2(
         mode = Mode[mode.upper()]
 
     return mode.estimate_co2(distance_in_km, occupancy)
-

@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+"""Modes along with their data and estimator."""
+
 from enum import Enum
 from typing import Optional
 
@@ -37,4 +41,3 @@ class Mode(Enum):
         occupancy = occupancy or self.average_occupancy
 
         return self.co2_per_vehicle_km * distance_in_km / occupancy
-
