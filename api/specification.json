@@ -14,7 +14,7 @@
       "summary": "Estimate CO2 emissions for a given transportation trip.",
       "description": "This endpoint will return an estimation of CO2 (equivalent) impact of a given transport trip, provided origin and destination (or pre-calculated distance in kilometers), and transportation mode.",
       "get": {
-        "operationId": "app.hello_world",
+        "operationId": "app.get_co2_estimate",
         "responses": {
           "200": {
             "$ref": "#/components/responses/co2_estimate_kg"
