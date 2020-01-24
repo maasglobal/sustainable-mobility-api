@@ -36,7 +36,7 @@
             "type": "number"
           },
           "in": "query",
-          "required": true
+          "required": false
         },
         {
           "examples": {
@@ -51,7 +51,7 @@
             "type": "number"
           },
           "in": "query",
-          "required": true
+          "required": false
         },
         {
           "examples": {
@@ -66,7 +66,7 @@
             "type": "number"
           },
           "in": "query",
-          "required": true
+          "required": false
         },
         {
           "examples": {
@@ -81,7 +81,7 @@
             "type": "number"
           },
           "in": "query",
-          "required": true
+          "required": false
         },
         {
           "examples": {
@@ -118,6 +118,15 @@
           "description": "Number of anticipated passengers in vehicle at time of trip.",
           "schema": {
             "type": "integer"
+          },
+          "in": "query",
+          "required": false
+        },
+        {
+          "name": "distance_km",
+          "description": "Distance of trip or leg in kilometers.",
+          "schema": {
+            "type": "number"
           },
           "in": "query",
           "required": false
