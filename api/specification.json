@@ -1,6 +1,6 @@
 {
   "summary": "Estimate CO2 emissions for a given transportation trip.",
-  "description": "This endpoint will return an estimation of CO2 (equivalent) impact of a given transport trip, provided origin, destination (or pre-calculated distance in kilometers), and transportation mode.",
+  "description": "This endpoint will return an estimation of CO2 (equivalent) impact of a given transport trip, provided origin and destination (or pre-calculated distance in kilometers), and transportation mode.",
   "get": {
     "responses": {
       "200": {
@@ -8,7 +8,7 @@
       }
     },
     "summary": "Get an estimate of CO2 emissions for a given transport trip.",
-    "description": "Provided with origin, destination, and transport mode, this endpoint will estimate CO2 emissions for a given transport trip."
+    "description": "Provided with origin and destination (or pre-calculated distance in kilometers), and transport mode, this endpoint will estimate CO2 emissions for a given transport trip."
   },
   "parameters": [
     {
