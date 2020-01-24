@@ -107,6 +107,20 @@
           },
           "in": "query",
           "required": true
+        },
+        {
+          "examples": {
+            "vehicle_occupancy_example": {
+              "value": "30"
+            }
+          },
+          "name": "vehicle_occupancy",
+          "description": "Number of anticipated passengers in vehicle at time of trip.",
+          "schema": {
+            "type": "integer"
+          },
+          "in": "query",
+          "required": false
         }
       ]
     }
