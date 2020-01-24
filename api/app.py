@@ -1,7 +1,8 @@
 import connexion
+from transport_co2 import estimate_co2
 
 
-def hello_world():
+def get_co2_estimate():
     return "hello world"
 
 
