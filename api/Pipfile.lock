@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6b77ca225de549d71fa1204d01b9f65ec0fe193eff47130a698b46999e5055e3"
+            "sha256": "e9b791423122ccd27b7c6aaf523c5abf65da7dfa39f94c4adeaf390961d716e4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -52,6 +52,9 @@
             "version": "==1.2.2"
         },
         "connexion": {
+            "extras": [
+                "swagger-ui"
+            ],
             "hashes": [
                 "sha256:3f6c2cb8a3f24af281ff561eebaaa926700b24f4c430f4d945c8ace0384c220c",
                 "sha256:56854c65334281b303120a1097df09a79ffa44bdaecfc4400e7194821e17566d"
@@ -189,6 +192,14 @@
                 "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
             ],
             "version": "==1.14.0"
+        },
+        "swagger-ui-bundle": {
+            "hashes": [
+                "sha256:49d2e12d60a6499e9d37ea37953b5d700f4e114edc7520fe918bae5eb693a20e",
+                "sha256:c5373b683487b1b914dccd23bcd9a3016afa2c2d1cda10f8713c0a9af0f91dd3",
+                "sha256:f776811855092c086dbb08216c8810a84accef8c76c796a135caa13645c5cc68"
+            ],
+            "version": "==0.0.6"
         },
         "transport-co2": {
             "hashes": [
