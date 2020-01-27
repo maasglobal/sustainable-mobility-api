@@ -8,8 +8,9 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-connexion = {extras = ["swagger-ui"], version = "*"}
+connexion = {extras = ["swagger-ui"],version = "*"}
 transport-co2 = "*"
+haversine = "*"
 
 [requires]
 python_version = "3.7"
