@@ -34,8 +34,8 @@ URL_SOURCE = (
     "https://github.com/maasglobal/sustainable-mobility-api/tree/master/estimator"
 )
 URL_TRACKER = "https://github.com/maasglobal/sustainable-mobility-api/issues"
-EMAIL = ("brylie.oxley@maas.global", "markus.schepke@maas.global")
-AUTHOR = ("Brylie Christopher Oxley", "Markus Schepke")
+EMAIL = "brylie.oxley@maas.global, markus.schepke@maas.global"
+AUTHOR = "Brylie Christopher Oxley, Markus Schepke"
 REQUIRES_PYTHON = ">=3.6.0"
 VERSION = None  # will be read from __version__.py
 
