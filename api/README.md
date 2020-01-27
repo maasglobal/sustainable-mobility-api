@@ -16,6 +16,7 @@ You can install the project dependencies with the following command from within 
 Once the dependencies have been installed (above) you can run the example server by running the following commands:
 
 > pipenv shell
+>
 > python app.py
 
 ### Accessing the documentation UI
