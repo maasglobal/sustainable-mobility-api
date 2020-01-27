@@ -10,7 +10,6 @@ def verify_origin_destination_coordinates_were_provided(origin_lat, origin_lon, 
 
 
 def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=None, origin_lat=None, origin_lon=None, destination_lat=None, destination_lon=None):
-
     origin_destination_coordinates_were_provided = verify_origin_destination_coordinates_were_provided(
         origin_lat,
         origin_lon,
