@@ -17,9 +17,25 @@ NAME = "transport-co2"
 DESCRIPTION = (
     "Library to calculate CO2 (equivalent) emissions for a given transport trip."
 )
-URL = "https://github.com/maasglobal/transport-co2"
-EMAIL = "brylie.oxley@maas.global, markus.schepke@maas.global"
-AUTHOR = "Brylie Christopher Oxley, Markus Schepke"
+KEYWORDS = (
+    "transport",
+    "co2",
+    "carbon",
+    "sustainability",
+)
+URL_HOMEPAGE = "https://github.com/maasglobal/sustainable-mobility-api"
+URL_DOCUMENTATION = (
+    "https://github.com/maasglobal/sustainable-mobility-api/"
+    + "tree/master/estimator/README.md"
+)
+URL_FUNDING = None
+URL_THANKS = None
+URL_SOURCE = (
+    "https://github.com/maasglobal/sustainable-mobility-api/tree/master/estimator"
+)
+URL_TRACKER = "https://github.com/maasglobal/sustainable-mobility-api/issues"
+EMAIL = ("brylie.oxley@maas.global", "markus.schepke@maas.global")
+AUTHOR = ("Brylie Christopher Oxley", "Markus Schepke")
 REQUIRES_PYTHON = ">=3.6.0"
 VERSION = None  # will be read from __version__.py
 
@@ -99,10 +115,18 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
+    keywords=KEYWORDS,
     author=AUTHOR,
     author_email=EMAIL,
+    url=URL_HOMEPAGE,
+    project_urls={
+        "Documentation": URL_DOCUMENTATION,
+        # "Funding": URL_FUNDING,
+        # "Say Thanks!": URL_THANKS,
+        "Source": URL_SOURCE,
+        "Tracker": URL_TRACKER,
+    },
     python_requires=REQUIRES_PYTHON,
-    url=URL,
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
