@@ -10,14 +10,23 @@ In order to run the server, you will need a few dependencies:
 ### Install project dependencies
 You can install the project dependencies with the following command from within the `api` directory:
 
-> pipenv install
+```sh
+pipenv install
+```
+
+### Launch the virtual environment
+Once pipenv has installed the dependencies, you can launch the virtual environment with this command:
+
+```sh
+pipenv shell
+```
 
 ### Run the server
-Once the dependencies have been installed (above) you can run the example server by running the following commands:
+Once the virtual environment is active and dependencies are installed, you can run the example server by running the following command:
 
-> pipenv shell
->
-> python app.py
+```sh
+python app.py
+```
 
 ### Accessing the documentation UI
 Once the server is running, you can access the documentation UI to try it out:
