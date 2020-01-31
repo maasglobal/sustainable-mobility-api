@@ -1,8 +1,7 @@
 import connexion
-from haversine import haversine
 import os
+from haversine import haversine
 from transport_co2 import estimate_co2
-
 
 def verify_origin_destination_coordinates_were_provided(origin_lat, origin_lon, destination_lat, destination_lon):
     # Ensure all origin/destination coordinates were provided
@@ -24,7 +23,6 @@ def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=No
         # Calculate distance from origin/destination
         origin = (origin_lat, origin_lon)
         destination = (destination_lat, destination_lon)
-
         distance_km = haversine(origin, destination)
     else:
         return {
@@ -34,7 +32,7 @@ def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=No
     co2_estimate = estimate_co2(mode=transport_mode, distance_in_km=distance_km, occupancy=vehicle_occupancy)
 
     return_data = {
-        #"transport_mode": transport_mode,
+        "transport_mode": transport_mode.name,
         "vehicle_occupancy": vehicle_occupancy,
         "co2_estimate": co2_estimate
     }
