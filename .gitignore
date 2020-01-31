@@ -105,3 +105,6 @@ venv.bak/
 
 # IDE
 .vscode
+
+# serverless
+.serverless
