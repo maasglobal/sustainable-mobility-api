@@ -13,4 +13,4 @@ COPY . /app
 
 RUN python -m pip install pipenv
 RUN pipenv install --deploy
-CMD ["pipenv", "run", "python3", "-m", "api"]
+CMD ["pipenv", "run", "python", "-m", "api"]
