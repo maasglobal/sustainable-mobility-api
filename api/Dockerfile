@@ -9,7 +9,7 @@ EXPOSE 8080
 
 RUN mkdir --parents /app
 WORKDIR /app
-ADD . /app
+COPY . /app
 
 RUN python -m pip install pipenv
 RUN pipenv install --ignore-pipfile
