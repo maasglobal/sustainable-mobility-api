@@ -1,7 +1,7 @@
 version: '2.1'
 
 services:
-  api:
+  sustainable-mobility-api:
     image: sustainable-mobility-api
     build: .
     ports:
