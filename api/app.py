@@ -1,6 +1,6 @@
 import connexion
 from haversine import haversine
-
+import os
 from transport_co2 import estimate_co2
 
 
@@ -27,20 +27,22 @@ def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=No
 
         distance_km = haversine(origin, destination)
     else:
-        return "Not enough information was provided to calculate CO2 estimate."
+        return {
+            "error": "Not enough information was provided to calculate CO2 estimate."
+        }
 
-    co2_estimate = estimate_co2(
-        mode=transport_mode, distance_in_km=distance_km, occupancy=vehicle_occupancy)
+    co2_estimate = estimate_co2(mode=transport_mode, distance_in_km=distance_km, occupancy=vehicle_occupancy)
 
     return_data = {
-        "transport_mode": transport_mode,
+        #"transport_mode": transport_mode,
         "vehicle_occupancy": vehicle_occupancy,
         "co2_estimate": co2_estimate
     }
 
     return return_data
 
+if os.environ.get("AWS_EXECUTION_ENV") == None:
+    app = connexion.FlaskApp(__name__)
+    app.add_api("specification.json")
+    app.run(port=8080)
 
-app = connexion.FlaskApp(__name__)
-app.add_api("specification.json")
-app.run(port=8080)
