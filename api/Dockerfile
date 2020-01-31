@@ -7,6 +7,7 @@ LABEL version="0.0.1"
 LABEL Name=sustainable-mobility-api Version=0.0.1
 EXPOSE 8080
 
+RUN mkdir --parents /app
 WORKDIR /app
 ADD . /app
 
