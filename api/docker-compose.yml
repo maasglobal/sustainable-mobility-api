@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  api:
+    image: sustainable-mobility-api
+    build: .
+    ports:
+      - 8080:8080
