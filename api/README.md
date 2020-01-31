@@ -32,3 +32,65 @@ python app.py
 Once the server is running, you can access the documentation UI to try it out:
 
 > http://0.0.0.0:8080/ui/
+
+
+### Deploy the serverless function
+
+You can use serverless framework to deploy estimate-co2 API to the AWS Lambda environment. 
+
+To deploy CloudFormation stack with function available publically via HTTPs, issue following commands:
+
+```bash
+npm i -g serverless
+serverless deploy
+```
+
+This will generate output which contains dynamic endpoint url for your function:
+
+```bash
+Serverless: Generating requirements.txt from Pipfile...
+Serverless: Parsed requirements.txt from Pipfile in .serverless/requirements.txt...
+Serverless: Packaging service...
+Serverless: Excluding development dependencies...
+Serverless: Injecting required Python packages to package...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service estimate-co2.zip file to S3 (7.28 MB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+..........
+Serverless: Stack update finished...
+Service Information
+service: estimate-co2
+stage: dev
+region: eu-west-1
+stack: estimate-co2-dev
+resources: 10
+api keys:
+  None
+endpoints:
+  GET - https://NNNNNNNN.execute-api.eu-west-1.amazonaws.com/dev/estimate-co2
+functions:
+  estimate-co2: estimate-co2-dev-estimate-co2
+layers:
+  None
+````
+
+Invoke function by using endpoint URL:
+
+```bash
+curl https://NNNNNNNN.execute-api.eu-west-1.amazonaws.com/dev/estimate-co2?transport_mode=bus&distance_km=24&vehicle_occupancy=2
+{
+   "input" : {
+      "vehicle_occupancy" : "2",
+      "distance_km" : "24",
+      "transport_mode" : "bus"
+   },
+   "result" : {
+      "vehicle_occupancy" : 2,
+      "co2_estimate" : 10356,
+      "transport_mode" : "BUS"
+   }
+}
+```
