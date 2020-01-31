@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.8
 
 LABEL Author="Brylie Christopher Oxley"
 LABEL E-mail="brylie.oxley@maas.global"
