@@ -1,0 +1,9 @@
+{
+  "name": "estimate-co2",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-python-requirements": "^5.0.1"
+  }
+}
