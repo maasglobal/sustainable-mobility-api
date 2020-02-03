@@ -1,5 +1,4 @@
 import connexion
-import os
 from haversine import haversine
 from transport_co2 import estimate_co2, Mode
 
@@ -38,7 +37,7 @@ def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=No
     co2_estimate = estimate_co2(mode=transport_mode, distance_in_km=distance_km, occupancy=vehicle_occupancy)
 
     return_data = {
-        "transport_mode": str(transport_mode),
+        "transport_mode": transport_mode.name if isinstance(transport_mode, Mode) else transport_mode,
         "vehicle_occupancy": vehicle_occupancy,
         "distance_km": distance_km,
         "co2_estimate": co2_estimate
