@@ -13,7 +13,7 @@ provider:
   versionFunctions: false
 
 functions:
-  estimate-co2:
+  post:
     handler: handler.post
     events:
       - http:

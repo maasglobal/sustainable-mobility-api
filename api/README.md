@@ -42,6 +42,7 @@ To deploy CloudFormation stack with function available publically via HTTPs, iss
 
 ```bash
 npm i -g serverless
+npm install
 serverless deploy
 ```
 
@@ -93,4 +94,10 @@ curl https://NNNNNNNN.execute-api.eu-west-1.amazonaws.com/dev/estimate-co2?trans
       "transport_mode" : "BUS"
    }
 }
+```
+
+Invoke function locally:
+
+```bash
+pipenv run serverless invoke local -f estimate-co2 -d '{ "queryStringParameters": { "transport_mode": "small_car", "distance_km": 55 } }'
 ```

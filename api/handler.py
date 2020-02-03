@@ -1,5 +1,4 @@
 import json
-import os
 from api import get_co2_estimate
 from transport_co2 import Mode
 import logging
@@ -21,7 +20,7 @@ def post(event, context):
             }
             return response
         
-        logging.info(f'estimate-co2 sourceIp={event["requestContext"]["identity"]["sourceIp"]} userAgent={event["requestContext"]["identity"]["userAgent"]}, input={vars}')
+        logging.info(f'estimate-co2 sourceIp={event["requestContext"]["identity"]["sourceIp"] if event.get("requestContext") else "?"} userAgent={event["requestContext"]["identity"]["userAgent"] if event.get("requestContext") else "?"}, input={vars}')
         
         transport_mode = vars.get("transport_mode")
         if isinstance(transport_mode, str):
@@ -52,7 +51,7 @@ def post(event, context):
                 })
             }
             return response
-            
+
         response = {
             "statusCode": 200,
             "body": json.dumps({
