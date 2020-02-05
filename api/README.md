@@ -120,5 +120,5 @@ curl https://NNNNNNNN.execute-api.eu-west-1.amazonaws.com/dev/estimate-co2?trans
 Invoke function locally:
 
 ```bash
-pipenv run serverless invoke local -f estimate-co2 -d '{ "queryStringParameters": { "transport_mode": "small_car", "distance_km": 55 } }'
+pipenv run serverless invoke local -f post -d '{ "queryStringParameters": { "transport_mode": "small_car", "distance_km": 55 } }'
 ```
