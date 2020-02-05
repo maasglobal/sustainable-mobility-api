@@ -9,7 +9,7 @@ EXPOSE 8080
 
 RUN mkdir --parents /app
 WORKDIR /app
-COPY . /app
+COPY Pipfile Pipfile.lock api.py specification.json ./
 
 RUN pip install pipenv
 RUN pipenv install --deploy
