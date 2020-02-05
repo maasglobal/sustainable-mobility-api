@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+black = "==19.10b0"
 
 [packages]
 connexion = {extras = ["swagger-ui"],version = "*"}
