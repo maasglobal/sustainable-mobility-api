@@ -25,18 +25,39 @@ pipenv shell
 Once the virtual environment is active and dependencies are installed, you can run the example server by running the following command:
 
 ```sh
-python app.py
+python api.py
 ```
 
 ### Accessing the documentation UI
+
 Once the server is running, you can access the documentation UI to try it out:
 
-> http://0.0.0.0:8080/ui/
+> http://127.0.0.1:8080/ui/
 
+### Try the API from command line
+
+```bash
+curl "http://localhost:8080/estimate-co2?transport_mode=small_car&distance_km=1"
+{
+  "co2_estimate": 112.0,
+  "distance_km": 1.0,
+  "transport_mode": "SMALL_CAR",
+  "vehicle_occupancy": 1.5
+}
+```
+
+### Deploy with Docker
+
+You don't need to install Python if you have a docker environment available.
+Use docker-compose to bring the docker container with API and documentation ready to be used:
+
+```bash
+docker-compose up -d
+```
 
 ### Deploy the serverless function
 
-You can use serverless framework to deploy estimate-co2 API to the AWS Lambda environment. 
+You can use serverless framework to deploy estimate-co2 API to the AWS Lambda environment. Please note that it does not deploy Swagger UI with documentation, only an API endpoint.
 
 To deploy CloudFormation stack with function available publically via HTTPs, issue following commands:
 
