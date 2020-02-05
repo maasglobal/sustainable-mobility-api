@@ -1,12 +1,18 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Connexion web app"""
+
 import connexion
+
 from haversine import haversine
 from transport_co2 import estimate_co2, Mode
 
 
-def verify_origin_destination_coordinates_were_provided(
+def verify_coordinates_were_provided(
     origin_lat, origin_lon, destination_lat, destination_lon
 ):
-    # Ensure all origin/destination coordinates were provided
+    """Ensure all origin/destination coordinates were provided."""
     return origin_lat and origin_lon and destination_lat and destination_lon
 
 
@@ -19,14 +25,16 @@ def get_co2_estimate(
     destination_lat=None,
     destination_lon=None,
 ):
-    origin_destination_coordinates_were_provided = verify_origin_destination_coordinates_were_provided(
+    """Entry point for connexion."""
+
+    coordinates_were_provided = verify_coordinates_were_provided(
         origin_lat, origin_lon, destination_lat, destination_lon
     )
 
-    if distance_km != None:
+    if distance_km is not None:
         # default to using provided distance
         pass
-    elif origin_destination_coordinates_were_provided:
+    elif coordinates_were_provided:
         # Calculate distance from origin/destination
         origin = (origin_lat, origin_lon)
         destination = (destination_lat, destination_lon)
@@ -39,7 +47,7 @@ def get_co2_estimate(
     if isinstance(transport_mode, str):
         transport_mode = Mode[transport_mode.upper()]
 
-    if vehicle_occupancy == None:
+    if vehicle_occupancy is None:
         vehicle_occupancy = transport_mode.average_occupancy
 
     co2_estimate = estimate_co2(
@@ -58,7 +66,11 @@ def get_co2_estimate(
     return return_data
 
 
-if __name__ == "__main__":
+def _main():
     app = connexion.FlaskApp(__name__)
     app.add_api("specification.json")
     app.run(port=8080)
+
+
+if __name__ == "__main__":
+    _main()
