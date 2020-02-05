@@ -26,7 +26,7 @@ def get_co2_estimate(transport_mode=None, distance_km=None, vehicle_occupancy=No
     else:
         return {
             "error": "Not enough information was provided to calculate CO2 estimate."
-        }
+        }, 400
     
     if isinstance(transport_mode, str):
         transport_mode = Mode[transport_mode.upper()]
