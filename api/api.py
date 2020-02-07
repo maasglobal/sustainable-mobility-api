@@ -25,7 +25,7 @@ def get_co2_estimate(
     destination_lat=None,
     destination_lon=None,
 ):
-    """Entry point for connexion."""
+    """Entry point for connexion as specified by operationId in specification.json"""
 
     coordinates_were_provided = verify_coordinates_were_provided(
         origin_lat, origin_lon, destination_lat, destination_lon
@@ -63,7 +63,7 @@ def get_co2_estimate(
         "co2_estimate": co2_estimate,
     }
 
-    return return_data
+    return return_data, 200
 
 
 def _main():
