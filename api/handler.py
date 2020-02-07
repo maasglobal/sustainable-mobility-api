@@ -54,7 +54,7 @@ def post(event, context):
         destination_lat = strtofloat(params.get("destination_lat"))
         destination_lon = strtofloat(params.get("destination_lon"))
 
-        estimate = get_co2_estimate(
+        (result, status_code) = get_co2_estimate(
             transport_mode=transport_mode,
             distance_km=distance_km,
             vehicle_occupancy=vehicle_occupancy,
@@ -64,16 +64,16 @@ def post(event, context):
             destination_lon=destination_lon,
         )
 
-        if isinstance(estimate, tuple) and estimate[0].get("error"):
+        if status_code > 399:
             response = {
-                "statusCode": 400,
-                "body": json.dumps({"error:": estimate[0].get("error")}),
+                "statusCode": status_code,
+                "body": json.dumps({"error:": result.get("error")}),
             }
             return response
 
         response = {
-            "statusCode": 200,
-            "body": json.dumps({"input": params, "result": estimate}),
+            "statusCode": status_code,
+            "body": json.dumps({"input": params, "result": result}),
         }
         return response
 
