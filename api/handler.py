@@ -64,12 +64,10 @@ def post(event, context):
             destination_lon=destination_lon,
         )
 
-        if isinstance(estimate, tuple) and estimate[0].get("error"):
+        if status_code > 399:
             response = {
-                "statusCode": 400,
-                "body": json.dumps({
-                    "error:": estimate[0].get("error")
-                })
+                "statusCode": status_code,
+                "body": json.dumps({"error:": result.get("error")}),
             }
             return response
 
