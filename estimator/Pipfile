@@ -16,4 +16,3 @@ pytest = "*"
 ipython = "*"
 
 [pipenv]
-allow_prereleases = true
