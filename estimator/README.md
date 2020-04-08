@@ -36,6 +36,12 @@ estimate_co2(mode="light_rail", distance_in_km=100, occupancy=250)
 # 873.6
 ```
 
+## Running unit tests
+In order to run the unit tests for this project:
+
+1. activate the virtual environment with `pipenv shell`
+2. run `pytest`
+
 ## Goals
 
 This project is intended to be used to help raise awareness about the cost of transportation choices, so people can make informed decisions.
