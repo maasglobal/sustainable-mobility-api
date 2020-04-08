@@ -1,5 +1,6 @@
-from transport_co2.estimator import estimate_co2
 from pytest import approx
+from transport_co2.estimator import estimate_co2
+
 
 # Only distance
 def test_estimate_co2_bus():
