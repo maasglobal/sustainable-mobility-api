@@ -12,3 +12,7 @@ python_version = "3.7"
 black = "==19.10b0"
 pylint = "*"
 twine = "*"
+pytest = "*"
+
+[pipenv]
+allow_prereleases = true
