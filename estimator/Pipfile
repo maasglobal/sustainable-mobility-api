@@ -13,6 +13,7 @@ black = "==19.10b0"
 pylint = "*"
 twine = "*"
 pytest = "*"
+ipython = "*"
 
 [pipenv]
 allow_prereleases = true
