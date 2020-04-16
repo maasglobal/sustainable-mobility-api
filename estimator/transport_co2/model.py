@@ -17,9 +17,9 @@ class Mode(Enum):
     https://www.eea.europa.eu/media/infographics/co2-emissions-from-passenger-transport/view
     """
 
-    def __init__(self, co2_per_vehicle_km: float, average_occupancy: float):
-        self.co2_per_vehicle_km = co2_per_vehicle_km
-        self.average_occupancy = average_occupancy
+    def __init__(self, avg_co2_per_vehicle_km: float, avg_occupancy: float):
+        self.avg_co2_per_vehicle_km = avg_co2_per_vehicle_km
+        self.avg_occupancy = avg_occupancy
 
     LIGHT_RAIL = (2184, 156)
     SMALL_CAR = (168, 1.5)
@@ -28,16 +28,24 @@ class Mode(Enum):
     BUS = (863, 12.7)
 
     def estimate_co2(
-        self, distance_in_km: float, occupancy: Optional[float] = None
+        self,
+        distance_in_km: float,
+        *,
+        co2_per_vehicle_km: Optional[float] = None,
+        occupancy: Optional[float] = None
     ) -> float:
         """
         Estimate CO2 usage for transport mode based on KM and optional vehicle occupancy.
 
         Keyword arguments:
-            distance_in_km -- distance for the trip in kilometers
-            occupancy -- optional vehicle occupancy (uses average occupancy if falsey)
+            distance_in_km -- distance for the trip in kilometers (required)
+            co2_per_vehicle_km -- CO2 emission in grams per vehicle km
+                (optional, uses mode average if falsey)
+            occupancy -- vehicle occupancy (optional, uses mode average if falsey)
         """
-        # occupancy should be above zero
-        occupancy = occupancy or self.average_occupancy
 
-        return self.co2_per_vehicle_km * distance_in_km / occupancy
+        co2_per_vehicle_km = co2_per_vehicle_km or self.avg_co2_per_vehicle_km
+        # occupancy should be above zero
+        occupancy = occupancy or self.avg_occupancy
+
+        return co2_per_vehicle_km * distance_in_km / occupancy
