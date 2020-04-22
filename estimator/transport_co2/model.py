@@ -23,25 +23,26 @@ class Fuel(Enum):
     BIODIESEL_5 = 2_650
     BIODIESEL_20 = 2_620
 
-    def __init__(self, avg_co2_g_per_litre: float):
-        self.avg_co2_g_per_litre = avg_co2_g_per_litre
+    # def __init__(self, avg_co2_g_per_litre: float):
+    #     self.avg_co2_g_per_litre = avg_co2_g_per_litre
 
     def estimate_co2_g(
         self,
         litres: float,
         *,
-        avg_co2_g_per_litre: Optional[float] = None
+        co2_g_per_litre: Optional[float] = None
     ) -> float:
         """
         Estimate CO2 grams produced for fuel type.
 
         Keyword arguments:
             litres -- total litres of fule combusted (required)
-            avg_co2_g_per_litre -- CO2 emission in grams per litre of fuel
+            co2_g_per_litre -- CO2 emission in grams per litre of fuel
                 (optional, uses fuel type average if falsey)
         """
 
-        return avg_co2_g_per_litre * litres
+        co2_g_per_litre = co2_g_per_litre or self.value
+        return co2_g_per_litre * litres
 
 
 class Mode(Enum):
