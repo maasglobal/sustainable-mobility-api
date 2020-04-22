@@ -6,7 +6,16 @@
 import connexion
 
 from haversine import haversine
-from transport_co2 import estimate_co2, Mode
+from transport_co2 import estimate_co2, Mode, Fuel
+
+
+def get_fuel_co2_estimate(fuel_type=None, litres=None, avg_co2_g_per_litre=None):
+    fuel = Fuel[fuel_type.upper()]
+
+    co2_estimate_g = fuel.estimate_co2_g(
+        litres=litres, avg_co2_g_per_litre=avg_co2_g_per_litre)
+
+    return (co2_estimate_g, 200)
 
 
 def verify_coordinates_were_provided(

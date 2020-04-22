@@ -2,12 +2,13 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Sustainable Mobility API",
-    "version": "0.0.1",
+    "version": "0.3.0",
     "description": "Promoting sustainable transportation systems by providing transparency into the environmental costs of transport journeys.",
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0"
-    }
+    },
+    "contact": {}
   },
   "paths": {
     "/estimate-co2": {
@@ -17,129 +18,183 @@
         "operationId": "api.get_co2_estimate",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/co2_estimate_kg"
+            "description": "This contains an estimate of CO2 emissions in grams for the given transportation trip."
           }
         },
-        "summary": "Get an estimate of CO2 emissions for a given transport trip.",
-        "description": "Provided with origin and destination (or pre-calculated distance in kilometers), and transport mode, this endpoint will estimate CO2 emissions for a given transport trip."
-      },
-      "parameters": [
-        {
-          "examples": {
-            "example_lat": {
-              "value": "60.1699"
-            }
+        "summary": "Get an estimate of CO2 emissions in grams for a given transport trip.",
+        "description": "Provided with origin and destination (or pre-calculated distance in kilometers), and transport mode, this endpoint will estimate CO2 emissions in grams for a given transport trip.",
+        "parameters": [
+          {
+            "examples": {
+              "example_lat": {
+                "value": "60.1699"
+              }
+            },
+            "name": "origin_lat",
+            "description": "Latitude for trip origin (using WGS 84).",
+            "schema": {
+              "format": "float",
+              "type": "number"
+            },
+            "in": "query",
+            "required": false
           },
-          "name": "origin_lat",
-          "description": "Latitude for trip origin (using WGS 84).",
-          "schema": {
-            "format": "float",
-            "type": "number"
+          {
+            "examples": {
+              "example_lon": {
+                "value": "24.9384"
+              }
+            },
+            "name": "origin_lon",
+            "description": "Longitude for trip origin (using WGS 84).",
+            "schema": {
+              "format": "float",
+              "type": "number"
+            },
+            "in": "query",
+            "required": false
           },
-          "in": "query",
-          "required": false
-        },
-        {
-          "examples": {
-            "example_lon": {
-              "value": "24.9384"
-            }
+          {
+            "examples": {
+              "example_lat": {
+                "value": "60.1699"
+              }
+            },
+            "name": "destination_lat",
+            "description": "Latitude for trip destination (using WGS 84).",
+            "schema": {
+              "format": "float",
+              "type": "number"
+            },
+            "in": "query",
+            "required": false
           },
-          "name": "origin_lon",
-          "description": "Longitude for trip origin (using WGS 84).",
-          "schema": {
-            "format": "float",
-            "type": "number"
+          {
+            "examples": {
+              "example_lon": {
+                "value": "24.9384"
+              }
+            },
+            "name": "destination_lon",
+            "description": "Longitude for trip destination (using WGS 84).",
+            "schema": {
+              "format": "float",
+              "type": "number"
+            },
+            "in": "query",
+            "required": false
           },
-          "in": "query",
-          "required": false
-        },
-        {
-          "examples": {
-            "example_lat": {
-              "value": "60.1699"
-            }
+          {
+            "examples": {
+              "example_mode": {
+                "value": "bike"
+              }
+            },
+            "name": "transport_mode",
+            "description": "Mode of transportation for given trip (leg).",
+            "schema": {
+              "enum": [
+                "small_car",
+                "large_car",
+                "bus",
+                "tram",
+                "metro",
+                "ferry",
+                "taxi",
+                "bike",
+                "scooter"
+              ],
+              "type": "string"
+            },
+            "in": "query",
+            "required": true
           },
-          "name": "destination_lat",
-          "description": "Latitude for trip destination (using WGS 84).",
-          "schema": {
-            "format": "float",
-            "type": "number"
+          {
+            "examples": {
+              "vehicle_occupancy_example": {
+                "value": "30"
+              }
+            },
+            "name": "vehicle_occupancy",
+            "description": "Number of anticipated passengers in vehicle at time of trip.",
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "required": false
           },
-          "in": "query",
-          "required": false
-        },
-        {
-          "examples": {
-            "example_lon": {
-              "value": "24.9384"
-            }
+          {
+            "name": "distance_km",
+            "description": "Distance of trip or leg in kilometers.",
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "required": false
+          }
+        ]
+      }
+    },
+    "/fuel/estimate-co2": {
+      "get": {
+        "summary": "Estimate CO2 emissions in grams for a given fuel type.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "fuel_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "petrol",
+                "ethanol_10",
+                "ethanol_85",
+                "diesel",
+                "biodiesel_5",
+                "biodiesel_20"
+              ]
+            },
+            "description": "Type of fuel consumed/combusted."
           },
-          "name": "destination_lon",
-          "description": "Longitude for trip destination (using WGS 84).",
-          "schema": {
-            "format": "float",
-            "type": "number"
+          {
+            "name": "litres",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Litres of fuel consumed/combusted."
           },
-          "in": "query",
-          "required": false
-        },
-        {
-          "examples": {
-            "example_mode": {
-              "value": "bike"
-            }
+          {
+            "name": "avg_co2_g_per_litre",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optionally override the grams per liter of CO2."
           },
-          "name": "transport_mode",
-          "description": "Mode of transportation for given trip (leg).",
-          "schema": {
-            "enum": [
-              "small_car",
-              "large_car",
-              "bus",
-              "tram",
-              "metro",
-              "ferry",
-              "taxi",
-              "bike",
-              "scooter"
-            ],
-            "type": "string"
-          },
-          "in": "query",
-          "required": true
-        },
-        {
-          "examples": {
-            "vehicle_occupancy_example": {
-              "value": "30"
-            }
-          },
-          "name": "vehicle_occupancy",
-          "description": "Number of anticipated passengers in vehicle at time of trip.",
-          "schema": {
-            "type": "integer"
-          },
-          "in": "query",
-          "required": false
-        },
-        {
-          "name": "distance_km",
-          "description": "Distance of trip or leg in kilometers.",
-          "schema": {
-            "type": "number"
-          },
-          "in": "query",
-          "required": false
+        ],
+        "operationId": "api.get_fuel_co2_estimate",
+        "responses": {
+          "default": {
+            "description": "Default response"
+          }
         }
-      ]
+      }
     }
   },
   "components": {
     "responses": {
-      "co2_estimate_kg": {
+      "co2_estimate_g": {
         "description": "This contains an estimate of CO2 emissions in grams for the given transportation trip."
       }
-    }
-  }
+    },
+    "links": {},
+    "callbacks": {},
+    "schemas": {}
+  },
+  "security": [],
+  "servers": []
 }
