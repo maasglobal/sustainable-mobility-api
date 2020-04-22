@@ -24,7 +24,7 @@ class Fuel(Enum):
     BIODIESEL_20 = 2_620
 
     def __init__(self, avg_co2_g_per_litre: float):
-        self.avg_co2_g_per_litre = avg_co2_per_litre
+        self.avg_co2_g_per_litre = avg_co2_g_per_litre
 
     def estimate_co2_g(
         self,
