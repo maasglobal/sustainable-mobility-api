@@ -6,6 +6,24 @@ from enum import Enum
 from typing import Optional
 
 
+class Fuel(Enum):
+    """
+    Data structure for estimating grams of CO2 per litre of various fuel types.
+
+    Source data:
+    Learn the facts: Fuel consumption and CO2
+    from Natural Resources Canada
+    https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/oee/pdf/transportation/fuel-efficient-technologies/autosmart_factsheet_6_e.pdf
+    """
+
+    PETROL = 2_290
+    ETHANOL_10 = 2_210
+    ETHANOL_85 = 1_610
+    DIESEL = 2_660
+    BIODIESEL_5 = 2_650
+    BIODIESEL_20 = 2_620
+
+
 class Mode(Enum):
     """
     Data structure containing grams of CO2/vehicle KM for several modes of transport
