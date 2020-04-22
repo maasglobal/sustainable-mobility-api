@@ -27,10 +27,7 @@ class Fuel(Enum):
     #     self.avg_co2_g_per_litre = avg_co2_g_per_litre
 
     def estimate_co2_g(
-        self,
-        litres: float,
-        *,
-        co2_g_per_litre: Optional[float] = None
+        self, litres: float, *, co2_g_per_litre: Optional[float] = None
     ) -> float:
         """
         Estimate CO2 grams produced for fuel type.
@@ -71,7 +68,7 @@ class Mode(Enum):
         distance_in_km: float,
         *,
         co2_per_vehicle_km: Optional[float] = None,
-        occupancy: Optional[float] = None
+        occupancy: Optional[float] = None,
     ) -> float:
         """
         Estimate CO2 usage for transport mode based on KM and optional vehicle occupancy.
