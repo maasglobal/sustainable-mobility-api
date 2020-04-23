@@ -3,7 +3,7 @@
 """Estimator as a function."""
 
 from typing import Optional, Union
-from .model import Mode
+from .model import Fuel, Mode
 
 
 def estimate_co2(
