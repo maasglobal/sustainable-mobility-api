@@ -35,7 +35,7 @@ def estimate_co2(
 
 
 def estimate_fuel_co2_g(
-    fuel: Union[str, Mode],
+    fuel: Union[str, Fuel],
     litres: float,
     *,
     co2_g_per_litre: Optional[float] = None
