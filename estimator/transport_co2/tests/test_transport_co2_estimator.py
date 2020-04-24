@@ -108,7 +108,7 @@ def test_estimate_fuel_co2_g_biodiesel_20():
 # custom co2_g_per_litre
 
 
-def test_estimate_fuel_co2_g_biodiesel_20():
+def test_estimate_fuel_custom_co2_g_per_litre():
     co2_g_per_litre = 1_000
     co2_estimate = estimate_fuel_co2_g(
         fuel="biodiesel_20", litres=1, co2_g_per_litre=co2_g_per_litre)
