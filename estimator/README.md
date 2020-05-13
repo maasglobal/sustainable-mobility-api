@@ -63,6 +63,18 @@ The carbon estimates produced by this model may be based on the following resour
 
 - European Environment Agency [CO2 emissions from passenger transport](https://www.eea.europa.eu/media/infographics/co2-emissions-from-passenger-transport/view)
 
+For modes not covered in the EEA infographic, we have used approximations and averages to provide estimates for all OpenTripPlanner modes.
+
+For Ferry mode calculation we use the average of 6.8 MJ per passenger kilometer with an average occupancy of 184 (Schiller & Kenworthy, 2017, pp. 142–143). We then used the procedure described in the following section in order to map megajoules to grams CO2 per passenger kilometer.
+
+With an average of 12g CO2 eq. per megajoule (The International Council on Clean Transportation, 2010), we estimate that each ferry passenger kilometer approximates to 81.6 g CO2.
+
+### Bibliography
+- The International Council on Clean Transportation. (2010). Carbon Intensity of Crude Oil in Europe. Retrieved from https://theicct.org/sites/default/files/ICCT_crudeoil_Eur_Dec2010_sum.pdf
+- Schiller, P. L., & Kenworthy, J. R. (2017). An Introduction to Sustainable Transportation. Abingdon, United Kingdom: Routledge.
+
+
+### Further reading
 Further improvements to the model may come from other sources, such as the following.
 
 - IPCC AR5 [Chapter 8 - Transport](https://www.ipcc.ch/site/assets/uploads/2018/02/ipcc_wg3_ar5_chapter8.pdf)
