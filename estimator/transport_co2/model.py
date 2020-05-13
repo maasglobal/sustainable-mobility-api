@@ -3,6 +3,7 @@
 """Modes along with their data and estimator."""
 
 from enum import Enum
+from statistics import mean
 from typing import Optional
 
 
@@ -44,10 +45,7 @@ class Mode(Enum):
     Data structure containing grams of CO2/vehicle KM for several modes of transport
     along with average occupancy for each mode.
 
-    Source data:
-    CO2 emissions from passenger transport
-    from European Environment Agency
-    https://www.eea.europa.eu/media/infographics/co2-emissions-from-passenger-transport/view
+    See the library README for sources and a description of how we arrive at these CO2 values.
     """
 
     def __init__(self, avg_co2_per_vehicle_km: float, avg_occupancy: float):
@@ -59,6 +57,21 @@ class Mode(Enum):
     LARGE_CAR = (220, 1.5)
     SCOOTER = (86.4, 1.2)
     BUS = (863, 12.7)
+
+    # Additional OTP modes
+    WALK = (0, 1)
+    BICYCLE = (0, 1)
+    CAR = (mean([SMALL_CAR[0], LARGE_CAR[0]]), 1.5)
+    TRAM = LIGHT_RAIL
+    SUBWAY = LIGHT_RAIL
+    RAIL = LIGHT_RAIL
+    FERRY = (15014.4, 184)
+    CABLE_CAR = LIGHT_RAIL
+    GONDOLA = LIGHT_RAIL
+    FUNICULAR = LIGHT_RAIL
+    TRANSIT = BUS
+    LEG_SWITCH = (0, 1)
+    AIRPLANE = (25080, 88)
 
     def estimate_co2(
         self,
