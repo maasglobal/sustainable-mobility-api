@@ -42,15 +42,34 @@ class Fuel(Enum):
 
 class Mode(Enum):
     """
-    Data structure containing grams of CO2/vehicle KM for several modes of transport
-    along with average occupancy for each mode.
+    Tuples for several modes of transport, each containing:
+    - average grams of CO2 per vehicle kilometer
+    - average vehicle occupancy.
 
-    See the library README for sources and a description of how we arrive at these CO2 values.
+    The modes of transport come from the OpenTripPlanner project.
+
+    See the library README for data sources and a description of how we arrive at these CO2 values.
     """
 
     def __init__(self, avg_co2_per_vehicle_km: float, avg_occupancy: float):
         self.avg_co2_per_vehicle_km = avg_co2_per_vehicle_km
         self.avg_occupancy = avg_occupancy
+
+    def __calculate_mean_of_transport_modes(modes: list):
+        """
+        For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
+
+        Given a list of multiple transport modes, calculate the average (mean)
+        CO2 grams per kilometer and occupancy
+
+        Return a tuple with the calculated averages.
+        """
+        co2_per_km_values, occupancy_values = zip(*modes)
+
+        average_co2_per_km = mean(co2_per_km_values)
+        average_vehicle_occupancy = mean(occupancy_values)
+
+        return (average_co2_per_km, average_vehicle_occupancy)
 
     LIGHT_RAIL = (2184, 156)
     SMALL_CAR = (168, 1.5)
@@ -61,15 +80,15 @@ class Mode(Enum):
     # Additional OTP modes
     WALK = (0, 1)
     BICYCLE = (0, 1)
-    CAR = (mean([SMALL_CAR[0], LARGE_CAR[0]]), 1.5)
+    CAR = __calculate_mean_of_transport_modes([SMALL_CAR, LARGE_CAR])
     TRAM = LIGHT_RAIL
-    SUBWAY = LIGHT_RAIL
+    SUBWAY = (193.44, 31)
     RAIL = LIGHT_RAIL
-    FERRY = (15014.4, 184)
+    FERRY = (7425.6, 91)
     CABLE_CAR = LIGHT_RAIL
     GONDOLA = LIGHT_RAIL
     FUNICULAR = LIGHT_RAIL
-    TRANSIT = BUS
+    TRANSIT = __calculate_mean_of_transport_modes([BUS, LIGHT_RAIL, SUBWAY])
     LEG_SWITCH = (0, 1)
     AIRPLANE = (25080, 88)
 
