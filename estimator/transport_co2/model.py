@@ -55,7 +55,7 @@ class Mode(Enum):
         self.avg_co2_per_vehicle_km = avg_co2_per_vehicle_km
         self.avg_occupancy = avg_occupancy
 
-    def __calculate_mean_of_transport_modes(modes: list):
+    def __calculate_mean_of_transport_modes(modes: list) -> tuple:
         """
         For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
 
