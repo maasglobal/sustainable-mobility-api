@@ -8,7 +8,7 @@ from typing import Optional
 
 
 def calculate_mean_of_transport_modes(modes: list) -> tuple:
-        """
+    """
         For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
 
         Given a list of multiple transport modes, calculate the average (mean)
@@ -16,12 +16,13 @@ def calculate_mean_of_transport_modes(modes: list) -> tuple:
 
         Return a tuple with the calculated averages.
         """
-        co2_per_km_values, occupancy_values = zip(*modes)
+    co2_per_km_values, occupancy_values = zip(*modes)
 
-        average_co2_per_km = mean(co2_per_km_values)
-        average_vehicle_occupancy = mean(occupancy_values)
+    average_co2_per_km = mean(co2_per_km_values)
+    average_vehicle_occupancy = mean(occupancy_values)
 
-        return (average_co2_per_km, average_vehicle_occupancy)
+    return (average_co2_per_km, average_vehicle_occupancy)
+
 
 class Fuel(Enum):
     """
@@ -76,8 +77,6 @@ class Mode(Enum):
     LARGE_CAR = (220, 1.5)
     SCOOTER = (86.4, 1.2)
     BUS = (863, 12.7)
-
-    # Additional OTP modes
     WALK = (0, 1)
     BICYCLE = (0, 1)
     CAR = calculate_mean_of_transport_modes([SMALL_CAR, LARGE_CAR])
