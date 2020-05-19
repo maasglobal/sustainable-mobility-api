@@ -9,13 +9,14 @@ from typing import Optional
 
 def calculate_mean_of_transport_modes(modes: list) -> tuple:
     """
-        For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
+    For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
 
-        Given a list of multiple transport modes, calculate the average (mean)
-        CO2 grams per kilometer and occupancy
+    Given a list of multiple transport modes, calculate the average (mean)
+    CO2 grams per kilometer and occupancy
 
-        Return a tuple with the calculated averages.
-        """
+    Return a tuple with the calculated averages.
+    """
+
     co2_per_km_values, occupancy_values = zip(*modes)
 
     average_co2_per_km = mean(co2_per_km_values)
