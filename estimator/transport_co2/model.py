@@ -7,6 +7,22 @@ from statistics import mean
 from typing import Optional
 
 
+def calculate_mean_of_transport_modes(modes: list) -> tuple:
+        """
+        For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
+
+        Given a list of multiple transport modes, calculate the average (mean)
+        CO2 grams per kilometer and occupancy
+
+        Return a tuple with the calculated averages.
+        """
+        co2_per_km_values, occupancy_values = zip(*modes)
+
+        average_co2_per_km = mean(co2_per_km_values)
+        average_vehicle_occupancy = mean(occupancy_values)
+
+        return (average_co2_per_km, average_vehicle_occupancy)
+
 class Fuel(Enum):
     """
     Data structure for estimating grams of CO2 per litre of various fuel types.
@@ -55,22 +71,6 @@ class Mode(Enum):
         self.avg_co2_per_vehicle_km = avg_co2_per_vehicle_km
         self.avg_occupancy = avg_occupancy
 
-    def __calculate_mean_of_transport_modes(modes: list) -> tuple:
-        """
-        For use in ambiguous modes where  CO2 grams per km and occupancy values are not available.
-
-        Given a list of multiple transport modes, calculate the average (mean)
-        CO2 grams per kilometer and occupancy
-
-        Return a tuple with the calculated averages.
-        """
-        co2_per_km_values, occupancy_values = zip(*modes)
-
-        average_co2_per_km = mean(co2_per_km_values)
-        average_vehicle_occupancy = mean(occupancy_values)
-
-        return (average_co2_per_km, average_vehicle_occupancy)
-
     LIGHT_RAIL = (2184, 156)
     SMALL_CAR = (168, 1.5)
     LARGE_CAR = (220, 1.5)
@@ -80,7 +80,7 @@ class Mode(Enum):
     # Additional OTP modes
     WALK = (0, 1)
     BICYCLE = (0, 1)
-    CAR = __calculate_mean_of_transport_modes([SMALL_CAR, LARGE_CAR])
+    CAR = calculate_mean_of_transport_modes([SMALL_CAR, LARGE_CAR])
     TRAM = LIGHT_RAIL
     SUBWAY = (193.44, 31)
     RAIL = LIGHT_RAIL
@@ -88,7 +88,7 @@ class Mode(Enum):
     CABLE_CAR = LIGHT_RAIL
     GONDOLA = LIGHT_RAIL
     FUNICULAR = LIGHT_RAIL
-    TRANSIT = __calculate_mean_of_transport_modes([BUS, LIGHT_RAIL, SUBWAY])
+    TRANSIT = calculate_mean_of_transport_modes([BUS, LIGHT_RAIL, SUBWAY])
     LEG_SWITCH = (0, 1)
     AIRPLANE = (25080, 88)
 
