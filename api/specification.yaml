@@ -75,15 +75,15 @@ paths:
         description: Mode of transportation for given trip (leg).
         schema:
           enum:
-            - small_car
-            - large_car
-            - bus
-            - tram
-            - metro
-            - ferry
-            - taxi
-            - bike
-            - scooter
+            - SMALL_CAR
+            - LARGE_CAR
+            - BUS
+            - TRAM
+            - METRO
+            - FERRY
+            - TAXI
+            - BIKE
+            - SCOOTER
           type: string
         in: query
         required: true
