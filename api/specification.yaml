@@ -8,6 +8,8 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: /
 paths:
   /estimate-co2:
     summary: Estimate CO2 emissions for a given transportation trip.
