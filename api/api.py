@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Connexion web app"""
-
-import connexion
-
 from haversine import haversine
 from transport_co2 import estimate_co2, Mode
 
@@ -64,13 +60,3 @@ def get_co2_estimate(
     }
 
     return return_data, 200
-
-
-def _main():
-    app = connexion.FlaskApp(__name__)
-    app.add_api("specification.json")
-    app.run(port=8080)
-
-
-if __name__ == "__main__":
-    _main()
