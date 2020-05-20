@@ -4,7 +4,7 @@ This project provides an example server for the Sustainable Mobility API project
 ## Running the server
 In order to run the server, you will need a few dependencies:
 
-- Python 3.7
+- Python 3
 - pipenv
 
 ### Install project dependencies
