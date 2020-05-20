@@ -28,7 +28,7 @@ paths:
     parameters:
       - examples:
           example_lat:
-            value: "60.1699"
+            value: "60.2055"
         name: origin_lat
         description: Latitude for trip origin (using WGS 84).
         schema:
