@@ -13,11 +13,20 @@ provider:
   versionFunctions: false
 
 functions:
-  post:
-    handler: handler.post
+  app:
+    handler: wsgi_handler.handler
     events:
-      - http:
-          path: /estimate-co2
-          method: get
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+custom:
+  wsgi:
+    app: app.app
+    pythonBin: python3 # Some systems with Python3 may require this
+    packRequirements: false
+  pythonRequirements:
+    dockerizePip: non-linux
+
 plugins:
   - serverless-python-requirements
+  - serverless-wsgi
