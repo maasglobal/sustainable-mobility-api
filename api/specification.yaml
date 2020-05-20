@@ -89,7 +89,7 @@ paths:
         required: true
       - examples:
           vehicle_occupancy_example:
-            value: "30"
+            value: "3"
         name: vehicle_occupancy
         description: Number of anticipated passengers in vehicle at time of trip.
         schema:
