@@ -22,6 +22,7 @@ KEYWORDS = (
     "co2",
     "carbon",
     "sustainability",
+    "mobility",
 )
 URL_HOMEPAGE = "https://github.com/maasglobal/sustainable-mobility-api"
 URL_DOCUMENTATION = (
