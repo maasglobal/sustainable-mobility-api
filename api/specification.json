@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Sustainable Mobility API",
-    "version": "0.0.1",
+    "version": "0.3.0",
     "description": "Promoting sustainable transportation systems by providing transparency into the environmental costs of transport journeys.",
     "license": {
       "name": "Apache 2.0",
