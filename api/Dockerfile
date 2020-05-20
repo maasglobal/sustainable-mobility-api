@@ -2,9 +2,9 @@ FROM python:3.7-slim
 
 LABEL Author="Brylie Christopher Oxley"
 LABEL E-mail="brylie.oxley@maas.global"
-LABEL version="0.0.1"
+LABEL version="0.3.0"
 
-LABEL Name=sustainable-mobility-api Version=0.0.1
+LABEL Name=sustainable-mobility-api Version=0.3.0
 EXPOSE 8080
 
 RUN mkdir --parents /app
