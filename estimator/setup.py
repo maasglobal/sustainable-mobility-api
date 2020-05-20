@@ -15,7 +15,7 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = "transport-co2"
 DESCRIPTION = (
-    "Library to calculate CO2 (equivalent) emissions for a given transport trip."
+    "Calculate CO2 emissions for personal mobility."
 )
 KEYWORDS = (
     "transport",
