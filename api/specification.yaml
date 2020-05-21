@@ -69,8 +69,8 @@ paths:
         in: query
         required: false
       - examples:
-          example_mode:
-            value: bike
+          example_small_car_mode:
+            value: SMALL_CAR
         name: transport_mode
         description: Mode of transportation for given trip (leg).
         schema:
