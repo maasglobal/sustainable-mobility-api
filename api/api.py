@@ -42,7 +42,7 @@ def get_co2_estimate(
         )
 
     if isinstance(transport_mode, str):
-        transport_mode = Mode[transport_mode.upper()]
+        transport_mode = Mode[transport_mode]
 
     if vehicle_occupancy is None:
         vehicle_occupancy = transport_mode.average_occupancy
