@@ -60,4 +60,4 @@ def get_co2_estimate(
         "co2_estimate": co2_estimate,
     }
 
-    return return_data, 200
+    return (return_data, 200)
