@@ -36,9 +36,10 @@ def get_co2_estimate(
         destination = (destination_lat, destination_lon)
         distance_km = haversine(origin, destination)
     else:
-        return {
-            "error": "Not enough information was provided to calculate CO2 estimate."
-        }, 400
+        return (
+            {"error": "Not enough information was provided to calculate CO2 estimate."},
+            400,
+        )
 
     if isinstance(transport_mode, str):
         transport_mode = Mode[transport_mode.upper()]
