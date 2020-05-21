@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Sustainable Mobility API
-  version: 0.3.0
+  version: 1.0.0
   description:
     Promoting sustainable transportation systems by providing transparency into
     the environmental costs of transport journeys.
