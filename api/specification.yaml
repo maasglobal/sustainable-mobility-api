@@ -25,7 +25,9 @@ paths:
       operationId: api.get_co2_estimate
       responses:
         "200":
-          $ref: "#/components/responses/co2_estimate_kg"
+          description: >-
+            This contains an estimate of CO2 emissions in grams for the given
+            transportation trip.
       summary: Get an estimate of CO2 emissions for a given transport trip.
       description: >-
         Provided with origin and destination (or pre-calculated distance in
@@ -78,26 +80,7 @@ paths:
           name: transport_mode
           description: Mode of transportation for given trip (leg).
           schema:
-            enum:
-              - LIGHT_RAIL
-              - SMALL_CAR
-              - LARGE_CAR
-              - SCOOTER
-              - BUS
-              - WALK
-              - BICYCLE
-              - CAR
-              - TRAM
-              - SUBWAY
-              - RAIL
-              - FERRY
-              - CABLE_CAR
-              - GONDOLA
-              - FUNICULAR
-              - TRANSIT
-              - LEG_SWITCH
-              - AIRPLANE
-            type: string
+            $ref: "#/components/schemas/transport_mode"
           in: query
           required: true
         - examples:
@@ -115,6 +98,39 @@ paths:
             type: number
           in: query
           required: false
+  /estimate-co2-multiple:
+    post:
+      summary: Get multiple CO2 estimates with a single request.
+      description: >-
+        Journey planners may need to annotate multiple itinerary options with
+        CO2 estimates. The HTTP overhead for multiple annotations may add
+        unreasonable delay to the overall journey planner result. This endpoint
+        reduces the network overhead by allowing multiple CO2 estimations to be
+        produced by a single HTTP request.
+      parameters:
+        - name: itinerary_options
+          in: header
+          required: true
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: "#/components/schemas/itinerary_option_origin_destination"
+                - $ref: "#/components/schemas/itinerary_option_distance_km"
+          description: >-
+            An array of itinerary options containing transport mode with at
+            least one of the following:
+
+            - origin/destination coordinates
+
+            - distance in kilometers
+      operationId: api.get_co2_estimate_multiple
+      responses:
+        "200":
+          description: >-
+            This contains an array of itineraries each containing an estimate of CO2 emissions in grams for the given
+            transportation trip. All additional properties present on the itinerary options will be preserved regardless of
+            whether they are used for the CO2 estimate.
 components:
   responses:
     co2_estimate_kg:
@@ -123,5 +139,71 @@ components:
         transportation trip.
   links: {}
   callbacks: {}
-  schemas: {}
+  schemas:
+    coordinate:
+      type: object
+      description: A geographic coordinate with latitude and longitude in WGS-84 CRS decimal degrees.
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      required:
+        - latitude
+        - longitude
+      example:
+        latitude: 60.2055
+        longitude: 24.9384
+    itinerary_option_origin_destination:
+      type: object
+      description: Itinerary option where the trip origin and destination coordinates are known. Using WGS-84 lat/long.
+      properties:
+        transport_mode:
+          $ref: "#/components/schemas/transport_mode"
+        origin:
+          $ref: "#/components/schemas/coordinate"
+        destination:
+          $ref: "#/components/schemas/coordinate"
+      required:
+        - transport_mode
+        - origin
+        - destination
+      additionalProperties: true
+    itinerary_option_distance_km:
+      type: object
+      description: Itinerary option where the trip distince in kilometers is known.
+      properties:
+        transport_mode:
+          $ref: "#/components/schemas/transport_mode"
+        distance_km:
+          type: number
+      required:
+        - transport_mode
+        - origin
+        - destination
+      additionalProperties: true
+    transport_mode:
+      type: string
+      enum:
+        - LIGHT_RAIL
+        - SMALL_CAR
+        - LARGE_CAR
+        - SCOOTER
+        - BUS
+        - WALK
+        - BICYCLE
+        - CAR
+        - TRAM
+        - SUBWAY
+        - RAIL
+        - FERRY
+        - CABLE_CAR
+        - GONDOLA
+        - FUNICULAR
+        - TRANSIT
+        - LEG_SWITCH
+        - AIRPLANE
+
 security: []
