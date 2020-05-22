@@ -23,11 +23,6 @@ paths:
       distance in kilometers), and transportation mode.
     get:
       operationId: api.get_co2_estimate
-      responses:
-        "200":
-          description: >-
-            This contains an estimate of CO2 emissions in grams for the given
-            transportation trip.
       summary: Get an estimate of CO2 emissions for a given transport trip.
       description: >-
         Provided with origin and destination (or pre-calculated distance in
@@ -98,6 +93,11 @@ paths:
             type: number
           in: query
           required: false
+      responses:
+        "200":
+          description: >-
+            This contains an estimate of CO2 emissions in grams for the given
+            transportation trip.
   /estimate-co2-multiple:
     post:
       summary: Get multiple CO2 estimates with a single request.
@@ -132,11 +132,6 @@ paths:
             transportation trip. All additional properties present on the itinerary options will be preserved regardless of
             whether they are used for the CO2 estimate.
 components:
-  responses:
-    co2_estimate_kg:
-      description: >-
-        This contains an estimate of CO2 emissions in grams for the given
-        transportation trip.
   links: {}
   callbacks: {}
   schemas:
