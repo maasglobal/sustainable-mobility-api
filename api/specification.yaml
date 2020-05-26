@@ -30,7 +30,7 @@ paths:
       produced by a single HTTP request.
     post:
       operationId: api.get_co2_estimate
-      summary: Get an estimate of CO2 emissions for one or more given transport legs.
+      summary: Get an estimate of CO2 emissions for one or more transport legs.
       description: >-
         Provided with origin and destination (or pre-calculated distance in
         kilometers), and transport mode, this endpoint will estimate CO2
@@ -48,9 +48,9 @@ paths:
       responses:
         "200":
           description: >-
-            This contains an array of legs each containing an estimate of CO2 emissions in grams for the given
-            transportation leg. All additional properties present on the itinerary options will be preserved regardless of
-            whether they are used for the CO2 estimate.
+            This contains an array of objects each containing an estimate of CO2 emissions in grams for the given
+            transportation leg. Where the CO2 estimation was not possible, an error object will be returned with
+            a description of the issue in the `error_message` field.
           content:
             application/json:
               schema:
@@ -66,7 +66,7 @@ components:
   schemas:
     coordinate:
       type: object
-      description: A geographic coordinate with latitude and longitude in WGS-84 CRS decimal degrees.
+      description: A geographic coordinate with latitude and longitude in WGS-84 decimal degrees.
       properties:
         latitude:
           type: number
@@ -87,6 +87,8 @@ components:
           $ref: "#/components/schemas/coordinate"
         destination:
           $ref: "#/components/schemas/coordinate"
+        vehicle_occupancy:
+          type: number
       required:
         - transport_mode
         - origin
@@ -102,16 +104,17 @@ components:
         other_property: "something else"
     itinerary_option_distance_km:
       type: object
-      description: Itinerary option where the trip distince in kilometers is known.
+      description: Itinerary option where the trip distince in kilometers is provided.
       properties:
         transport_mode:
           $ref: "#/components/schemas/transport_mode"
         distance_km:
           type: number
+        distance_km:
+          type: number
       required:
         - transport_mode
-        # - origin
-        # - destination
+        - distance_km
       additionalProperties: true
     transport_mode:
       type: string
