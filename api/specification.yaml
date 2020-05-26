@@ -110,7 +110,7 @@ components:
           $ref: "#/components/schemas/transport_mode"
         distance_km:
           type: number
-        distance_km:
+        vehicle_occupancy:
           type: number
       required:
         - transport_mode
