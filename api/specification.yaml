@@ -16,121 +16,50 @@ servers:
     description: Local server relative to documentation server.
 paths:
   /estimate-co2:
-    summary: Estimate CO2 emissions for a given transportation trip.
+    summary: Estimate CO2 emissions for one or more transportation legs.
     description: >-
-      This endpoint will return an estimation of CO2 (equivalent) impact of a
-      given transport trip, provided origin and destination (or pre-calculated
-      distance in kilometers), and transportation mode.
-    get:
+      This endpoint will return an estimation of CO2 impact of one or more
+      transport legs, provided origin and destination (or pre-calculated
+      distance in kilometers), and transportation mode for each leg. The leg
+      vehicle occupancy can be overridden when it is not desirable to use an average value.
+
+      Design rationale: Journey planners may need to annotate multiple itinerary options with
+      CO2 estimates. The HTTP overhead for multiple annotations may add
+      unreasonable delay to the overall journey planner result. This endpoint
+      reduces the network overhead by allowing multiple CO2 estimations to be
+      produced by a single HTTP request.
+    post:
       operationId: api.get_co2_estimate
-      summary: Get an estimate of CO2 emissions for a given transport trip.
+      summary: Get an estimate of CO2 emissions for one or more given transport legs.
       description: >-
         Provided with origin and destination (or pre-calculated distance in
         kilometers), and transport mode, this endpoint will estimate CO2
-        emissions for a given transport trip.
-      parameters:
-        - examples:
-            example_lat:
-              value: "60.2055"
-          name: origin_lat
-          description: Latitude for trip origin (using WGS 84).
-          schema:
-            format: float
-            type: number
-          in: query
-          required: false
-        - examples:
-            example_lon:
-              value: "24.9384"
-          name: origin_lon
-          description: Longitude for trip origin (using WGS 84).
-          schema:
-            format: float
-            type: number
-          in: query
-          required: false
-        - examples:
-            example_lat:
-              value: "60.1699"
-          name: destination_lat
-          description: Latitude for trip destination (using WGS 84).
-          schema:
-            format: float
-            type: number
-          in: query
-          required: false
-        - examples:
-            example_lon:
-              value: "24.9384"
-          name: destination_lon
-          description: Longitude for trip destination (using WGS 84).
-          schema:
-            format: float
-            type: number
-          in: query
-          required: false
-        - examples:
-            example_small_car_mode:
-              value: SMALL_CAR
-          name: transport_mode
-          description: Mode of transportation for given trip (leg).
-          schema:
-            $ref: "#/components/schemas/transport_mode"
-          in: query
-          required: true
-        - examples:
-            vehicle_occupancy_example:
-              value: "3"
-          name: vehicle_occupancy
-          description: Number of anticipated passengers in vehicle at time of trip.
-          schema:
-            type: integer
-          in: query
-          required: false
-        - name: distance_km
-          description: Distance of trip or leg in kilometers.
-          schema:
-            type: number
-          in: query
-          required: false
+        emissions for one or more transport legs.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                oneOf:
+                  - $ref: "#/components/schemas/itinerary_option_origin_destination"
+                  - $ref: "#/components/schemas/itinerary_option_distance_km"
       responses:
         "200":
           description: >-
-            This contains an estimate of CO2 emissions in grams for the given
-            transportation trip.
-  /estimate-co2-multiple:
-    post:
-      summary: Get multiple CO2 estimates with a single request.
-      description: >-
-        Journey planners may need to annotate multiple itinerary options with
-        CO2 estimates. The HTTP overhead for multiple annotations may add
-        unreasonable delay to the overall journey planner result. This endpoint
-        reduces the network overhead by allowing multiple CO2 estimations to be
-        produced by a single HTTP request.
-      parameters:
-        - name: itinerary_options
-          in: header
-          required: true
-          schema:
-            type: array
-            items:
-              oneOf:
-                - $ref: "#/components/schemas/itinerary_option_origin_destination"
-                - $ref: "#/components/schemas/itinerary_option_distance_km"
-          description: >-
-            An array of itinerary options containing transport mode with at
-            least one of the following:
-
-            - origin/destination coordinates
-
-            - distance in kilometers
-      operationId: api.get_co2_estimate_multiple
-      responses:
-        "200":
-          description: >-
-            This contains an array of itineraries each containing an estimate of CO2 emissions in grams for the given
-            transportation trip. All additional properties present on the itinerary options will be preserved regardless of
+            This contains an array of legs each containing an estimate of CO2 emissions in grams for the given
+            transportation leg. All additional properties present on the itinerary options will be preserved regardless of
             whether they are used for the CO2 estimate.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - oneOf:
+                        - $ref: "#/components/schemas/co2_estimate"
+                        - $ref: "#/components/schemas/error"
 components:
   links: {}
   callbacks: {}
@@ -148,9 +77,6 @@ components:
       required:
         - latitude
         - longitude
-      example:
-        latitude: 60.2055
-        longitude: 24.9384
     itinerary_option_origin_destination:
       type: object
       description: Itinerary option where the trip origin and destination coordinates are known. Using WGS-84 lat/long.
@@ -166,6 +92,14 @@ components:
         - origin
         - destination
       additionalProperties: true
+      example:
+        origin:
+          latitude: 60.2055
+          longitude: 24.9384
+        destination:
+          latitude: 60.2055
+          longitude: 24.6559
+        other_property: "something else"
     itinerary_option_distance_km:
       type: object
       description: Itinerary option where the trip distince in kilometers is known.
@@ -176,8 +110,8 @@ components:
           type: number
       required:
         - transport_mode
-        - origin
-        - destination
+        # - origin
+        # - destination
       additionalProperties: true
     transport_mode:
       type: string
@@ -200,5 +134,18 @@ components:
         - TRANSIT
         - LEG_SWITCH
         - AIRPLANE
-
+    co2_estimate:
+      type: object
+      description: An estimate of grams CO2 for the given transportation leg.
+      example:
+        transport_mode: "SMALL_CAR"
+        vehicle_occupancy: 2
+        distance_km: 20
+        estimated_co2_g: 200
+    error:
+      type: object
+      description: Error details about why CO2 estimation failed for this specific leg.
+      properties:
+        error_message:
+          type: string
 security: []
