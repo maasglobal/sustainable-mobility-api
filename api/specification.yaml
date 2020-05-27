@@ -17,24 +17,32 @@ servers:
 paths:
   /estimate-co2:
     summary: Estimate CO2 emissions for one or more transportation legs.
-    description: >-
-      This endpoint will return an estimation of CO2 impact of one or more
-      transport legs, provided origin and destination (or pre-calculated
-      distance in kilometers), and transportation mode for each leg. The leg
-      vehicle occupancy can be overridden when it is not desirable to use an average value.
-
-      Design rationale: Journey planners may need to annotate multiple itinerary options with
-      CO2 estimates. The HTTP overhead for multiple annotations may add
-      unreasonable delay to the overall journey planner result. This endpoint
-      reduces the network overhead by allowing multiple CO2 estimations to be
-      produced by a single HTTP request.
     post:
       operationId: api.get_co2_estimate
       summary: Get an estimate of CO2 emissions for one or more transport legs.
       description: >-
-        Provided with origin and destination (or pre-calculated distance in
-        kilometers), and transport mode, this endpoint will estimate CO2
-        emissions for one or more transport legs.
+        This endpoint will estimate CO2 emissions for one or more transport legs based on:
+
+        - either
+
+          - origin and destination (WGS-84 lat/lon)
+
+          - pre-calculated distance in kilometers
+
+        - transport mode,
+
+        - vehicle occupancy (optional),
+
+
+        Additional properties will be ignored and returned in the response array.
+
+
+        ## Design rationale
+
+        Journey planners may need to annotate multiple transportation legs with
+        CO2 estimates. The HTTP overhead for multiple annotations may add 
+        unreasonable delay to the overall journey planner result. This endpoint
+        reduces network overhead by producing multiple CO2 estimates from a single HTTP request.
       requestBody:
         required: true
         content:
@@ -47,19 +55,25 @@ paths:
                   - $ref: "#/components/schemas/itinerary_option_distance_km"
       responses:
         "200":
-          description: >-
-            This contains an array of objects each containing an estimate of CO2 emissions in grams for the given
-            transportation leg. Where the CO2 estimation was not possible, an error object will be returned with
-            a description of the issue in the `error_message` field.
+          description: >
+            Returns an array of objects each containing an estimate of CO2 emissions in grams for the given
+            transportation leg. 
+
+
+            ## Errors
+
+            Where the CO2 estimation was not possible for a particular input,
+            an `error` object will be returned with a description of the issue in the `error_message` field.
+
+            ## Original request
+
+            The response will contain the unmodified `request_object` as provided in the request body.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  allOf:
-                    - oneOf:
-                        - $ref: "#/components/schemas/co2_estimate"
-                        - $ref: "#/components/schemas/error"
+                  $ref: "#/components/schemas/co2_estimate_response"
 components:
   links: {}
   callbacks: {}
@@ -116,6 +130,11 @@ components:
         - transport_mode
         - distance_km
       additionalProperties: true
+      example:
+        transport_mode: "SMALL_CAR"
+        vehicle_occupancy: 2
+        distance_km: 20
+        other_property: "something else"
     transport_mode:
       type: string
       enum:
@@ -140,6 +159,15 @@ components:
     co2_estimate:
       type: object
       description: An estimate of grams CO2 for the given transportation leg.
+      properties:
+        transport_mode:
+          type: string
+        vehicle_occupancy:
+          type: integer
+        distance_km:
+          type: number
+        estimated_co2_g:
+          type: number
       example:
         transport_mode: "SMALL_CAR"
         vehicle_occupancy: 2
@@ -151,4 +179,16 @@ components:
       properties:
         error_message:
           type: string
+      example:
+        error_message: "Not enough information provided for CO2 estimate."
+    co2_estimate_response:
+      type: object
+      description: A response item related to a specific request input. Will contain either a CO2 estimate or error object.
+      oneOf:
+        - $ref: "#/components/schemas/co2_estimate"
+        - $ref: "#/components/schemas/error"
+      properties:
+        request_object:
+          type: object
+          description: "Unmodified object provided in request body."
 security: []
