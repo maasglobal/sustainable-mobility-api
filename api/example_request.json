@@ -8,7 +8,8 @@
       "latitude": 60.2055,
       "longitude": 24.9384
     },
-    "other_property": "something else"
+    "other_property": "something else",
+    "transport_mode": "SMALL_CAR"
   },
   {
     "distance_km": 20,
