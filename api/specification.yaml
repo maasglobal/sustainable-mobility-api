@@ -18,7 +18,7 @@ paths:
   /estimate-co2:
     summary: Estimate CO2 emissions for one or more transportation legs.
     post:
-      operationId: api.get_co2_estimate
+      operationId: api.estimate_co2
       summary: Get an estimate of CO2 emissions for one or more transport legs.
       description: >-
         This endpoint will estimate CO2 emissions for one or more transport legs based on:
@@ -115,6 +115,7 @@ components:
         destination:
           latitude: 60.2055
           longitude: 24.6559
+        transport_mode: "SMALL_CAR"
         other_property: "something else"
     itinerary_option_distance_km:
       type: object
