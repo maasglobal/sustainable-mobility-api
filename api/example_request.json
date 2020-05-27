@@ -1,0 +1,19 @@
+[
+  {
+    "destination": {
+      "latitude": 60.2055,
+      "longitude": 24.6559
+    },
+    "origin": {
+      "latitude": 60.2055,
+      "longitude": 24.9384
+    },
+    "other_property": "something else"
+  },
+  {
+    "distance_km": 20,
+    "other_property": "something else",
+    "transport_mode": "SMALL_CAR",
+    "vehicle_occupancy": 2
+  }
+]
