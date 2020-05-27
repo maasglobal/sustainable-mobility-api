@@ -23,6 +23,8 @@ def get_co2_estimate(
 ):
     """Entry point for connexion as specified by operationId in specification.json"""
 
+    mode = Mode[transport_mode]
+
     coordinates_were_provided = verify_coordinates_were_provided(
         origin_lat, origin_lon, destination_lat, destination_lon
     )
@@ -34,30 +36,29 @@ def get_co2_estimate(
         # Calculate distance from origin/destination
         origin = (origin_lat, origin_lon)
         destination = (destination_lat, destination_lon)
+
         distance_km = haversine(origin, destination)
     else:
-        return (
-            {"error": "Not enough information was provided to calculate CO2 estimate."},
-            400,
-        )
-
-    if isinstance(transport_mode, str):
-        transport_mode = Mode[transport_mode]
+        return {
+            "error_message": "Not enough information was provided to calculate CO2 estimate."
+        }
 
     if vehicle_occupancy is None:
-        vehicle_occupancy = transport_mode.average_occupancy
+        vehicle_occupancy = mode.average_occupancy
 
-    co2_estimate = estimate_co2(
-        mode=transport_mode, distance_in_km=distance_km, occupancy=vehicle_occupancy
+    co2_estimate = Mode[transport_mode].estimate_co2(
+        distance_in_km=distance_km, occupancy=vehicle_occupancy
     )
 
-    return_data = {
-        "transport_mode": transport_mode.name
-        if isinstance(transport_mode, Mode)
-        else transport_mode,
+    return {
+        "transport_mode": transport_mode,
         "vehicle_occupancy": vehicle_occupancy,
         "distance_km": distance_km,
         "co2_estimate": co2_estimate,
     }
 
-    return (return_data, 200)
+
+def estimate_co2(body):
+    co2_estimates = [get_co2_estimate(*item) for item in body]
+
+    return co2_estimates
