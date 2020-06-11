@@ -5,37 +5,38 @@ from haversine import haversine
 from transport_co2 import estimate_co2, Mode
 
 
-def verify_coordinates_were_provided(
-    origin_lat, origin_lon, destination_lat, destination_lon
-):
+def verify_coordinates_were_provided(origin, destination):
     """Ensure all origin/destination coordinates were provided."""
-    return origin_lat and origin_lon and destination_lat and destination_lon
+    return (
+        origin
+        and destination
+        and origin["latitude"]
+        and origin["longitude"]
+        and destination["latitude"]
+        and destination["longitude"]
+    )
 
 
 def get_co2_estimate(
     transport_mode=None,
+    origin=None,
+    destination=None,
     distance_km=None,
     vehicle_occupancy=None,
-    origin_lat=None,
-    origin_lon=None,
-    destination_lat=None,
-    destination_lon=None,
+    *args,
+    **kwargs,
 ):
-    """Entry point for connexion as specified by operationId in specification.json"""
+    """Estimate CO2 for a given leg, preserving original properties"""
 
-    mode = Mode[transport_mode]
-
-    coordinates_were_provided = verify_coordinates_were_provided(
-        origin_lat, origin_lon, destination_lat, destination_lon
-    )
+    coordinates_were_provided = verify_coordinates_were_provided(origin, destination)
 
     if distance_km is not None:
         # default to using provided distance
         pass
     elif coordinates_were_provided:
         # Calculate distance from origin/destination
-        origin = (origin_lat, origin_lon)
-        destination = (destination_lat, destination_lon)
+        origin = (origin["latitude"], origin["longitude"])
+        destination = (destination["latitude"], destination["longitude"])
 
         distance_km = haversine(origin, destination)
     else:
@@ -43,10 +44,12 @@ def get_co2_estimate(
             "error_message": "Not enough information was provided to calculate CO2 estimate."
         }
 
-    if vehicle_occupancy is None:
-        vehicle_occupancy = mode.average_occupancy
+    mode = Mode[transport_mode]
 
-    co2_estimate = Mode[transport_mode].estimate_co2(
+    if vehicle_occupancy is None:
+        vehicle_occupancy = mode.avg_occupancy
+
+    co2_estimate = mode.estimate_co2(
         distance_in_km=distance_km, occupancy=vehicle_occupancy
     )
 
@@ -59,6 +62,9 @@ def get_co2_estimate(
 
 
 def estimate_co2(body):
-    co2_estimates = [get_co2_estimate(*item) for item in body]
+    # Join the CO2 estimate object with original request object
+    co2_estimates = [
+        {**get_co2_estimate(**leg), **{"request_object": leg}} for leg in body
+    ]
 
     return co2_estimates
