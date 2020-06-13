@@ -157,6 +157,7 @@ components:
         - TRANSIT
         - LEG_SWITCH
         - AIRPLANE
+        - WAIT
     co2_estimate:
       type: object
       description: An estimate of grams CO2 for the given transportation leg.
