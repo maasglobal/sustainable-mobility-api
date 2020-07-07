@@ -64,7 +64,7 @@ def get_co2_estimate(
 def estimate_co2(body):
     # Join the CO2 estimate object with original request object
     co2_estimates = [
-        {**get_co2_estimate(**leg), **{"request_object": leg}} for leg in body
+        {**get_co2_estimate(**leg), "request_object": leg} for leg in body
     ]
 
     return co2_estimates
