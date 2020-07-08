@@ -80,7 +80,17 @@ def estimate_request_co2(body):
 
     # Create a dictionary with CO2 estimate and original request object
     co2_estimates = [
-        {"co2_estimate": get_co2_estimate(**leg), "request_object": leg} for leg in body
+        {
+            "co2_estimate": get_co2_estimate(
+                transport_mode=leg.get("transport_mode"),
+                origin=leg.get("origin"),
+                destination=leg.get("destination"),
+                distance_km=leg.get("distance_km"),
+                vehicle_occupancy=leg.get("vehicle_occupancy"),
+            ),
+            "request_object": leg,
+        }
+        for leg in body
     ]
 
     return co2_estimates
