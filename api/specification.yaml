@@ -162,27 +162,35 @@ components:
       type: object
       description: An estimate of grams CO2 for the given transportation leg.
       properties:
-        transport_mode:
-          type: string
-        vehicle_occupancy:
-          type: integer
-        distance_km:
-          type: number
-        estimated_co2_g:
-          type: number
+        co2_estimate:
+          type: object
+          properties:
+            transport_mode:
+              type: string
+            vehicle_occupancy:
+              type: integer
+            distance_km:
+              type: number
+            estimated_co2_g:
+              type: number
       example:
-        transport_mode: "SMALL_CAR"
-        vehicle_occupancy: 2
-        distance_km: 20
-        estimated_co2_g: 200
+        co2_estimate:
+          transport_mode: "SMALL_CAR"
+          vehicle_occupancy: 2
+          distance_km: 20
+          estimated_co2_g: 200
     error:
       type: object
       description: Error details about why CO2 estimation failed for this specific leg.
       properties:
-        error_message:
-          type: string
+        error:
+          type: object
+          properties:
+            message:
+              type: string
       example:
-        error_message: "Not enough information provided for CO2 estimate."
+        error:
+          message: "Not enough information provided for CO2 estimate."
     co2_estimate_response:
       type: object
       description: A response item related to a specific request input. Will contain either a CO2 estimate or error object.

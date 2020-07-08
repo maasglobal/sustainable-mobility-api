@@ -24,9 +24,13 @@ def get_co2_estimate(
     distance_km=None,
     vehicle_occupancy=None,
     *args,
-    **kwargs,
+    **kwargs
 ):
-    """Estimate CO2 for a given leg, preserving original properties"""
+    """
+    Estimate CO2 for a given leg, preserving original properties
+    
+    Note: we do not use the keyword arguments here.
+    """
 
     coordinates_were_provided = verify_coordinates_were_provided(origin, destination)
 
@@ -53,6 +57,8 @@ def get_co2_estimate(
         distance_in_km=distance_km, occupancy=vehicle_occupancy
     )
 
+    # CO2 estimate dictionary should only include the estimate
+    # and component values used for the calculation
     return {
         "transport_mode": transport_mode,
         "vehicle_occupancy": vehicle_occupancy,
@@ -62,9 +68,9 @@ def get_co2_estimate(
 
 
 def estimate_co2(body):
-    # Join the CO2 estimate object with original request object
+    # Create a dictionary with CO2 estimate and original request object
     co2_estimates = [
-        {**get_co2_estimate(**leg), "request_object": leg} for leg in body
+        {"co2_estimate": get_co2_estimate(**leg), "request_object": leg} for leg in body
     ]
 
     return co2_estimates
