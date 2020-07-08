@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+This module handles CO2 estimates and performs some validation.
+"""
+
 from haversine import haversine
-from transport_co2 import estimate_co2, Mode
+from transport_co2 import Mode
 
 
 def verify_coordinates_were_provided(origin, destination):
@@ -23,12 +27,10 @@ def get_co2_estimate(
     destination=None,
     distance_km=None,
     vehicle_occupancy=None,
-    *args,
-    **kwargs
 ):
     """
     Estimate CO2 for a given leg, preserving original properties
-    
+
     Note: we do not use the keyword arguments here.
     """
 
@@ -67,7 +69,15 @@ def get_co2_estimate(
     }
 
 
-def estimate_co2(body):
+def estimate_request_co2(body):
+    """
+    Takes a request body with one or more transport legs.
+
+    Returns a list of CO2 estimates with two properties:
+    - co2_estimate: the CO2 estimation with properties used for the calculation
+    - request_object: the original request object with all properties preserved
+    """
+
     # Create a dictionary with CO2 estimate and original request object
     co2_estimates = [
         {"co2_estimate": get_co2_estimate(**leg), "request_object": leg} for leg in body
